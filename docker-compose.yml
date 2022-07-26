@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  localstack:
+    container_name: localstack
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+      # - "4571:4571"
+      # - "8080:8080"
+    environment:
+      - SERVICES=s3,lambda,logs #s3
+      - DATA_DIR=/tmp/localstack/data
+      - DEFAULT_REGION=ap-northeast-1
+      - USER=root
+      - HOSTNAME_EXTERNAL=localstack
+      - LS_LOG=info
+    volumes:
+      - ./localstack:/tmp/localstack
+    networks:
+      - container-link
+
+volumes:
+  localstack:
+
+networks:
+  container-link:
+    name: localstack.internal
