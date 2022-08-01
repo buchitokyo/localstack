@@ -39,9 +39,9 @@ add Enviroment (S3)
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  excel-auto
+  excel-report
 
-  Sample SAM Template for excel-auto
+  Sample SAM Template for excel-report
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -52,7 +52,7 @@ Globals:
     TracingEnabled: True
 
 Resources:
-  FuncFunction:
+   FuncFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: func/
@@ -60,12 +60,12 @@ Resources:
       Runtime: python3.9
       Architectures:
         - x86_64
-      # Events:
-      #   HelloWorld:
-      #     Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-      #     Properties:
-      #       Path: /hello
-      #       Method: get
+      Events:
+        Func:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /excel-report
+            Method: get
       Environment:
         Variables:
           S3_BUCKET: 'develop'
@@ -77,15 +77,15 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  # HelloWorldApi:
-  #   Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-  #   Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  FuncApi:
+    Description: "API Gateway endpoint URL for Prod stage for func function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/excel-report/"
   FuncFunction:
-    Description: "excel-auto Lambda Function ARN"
-    Value: !GetAtt ExcelAutodFunction.Arn
+    Description: "func Lambda Function ARN"
+    Value: !GetAtt FuncFunction.Arn
   FuncFunctionIamRole:
-    Description: "Implicit IAM Role created for excel-auto function"
-    Value: !GetAtt ExcelAutoFunctionRole.Arn
+    Description: "Implicit IAM Role created for func function"
+    Value: !GetAtt FuncFunctionRole.Arn
 ```
 remove event dir, readme.md, init.py .gitignore (if you have a repo, just leave i as it is) and etc..  
 
@@ -105,6 +105,13 @@ template.yamlがある場所で
 .aws-sam/build/template.yamlがある場所で  
 **`sam local invoke FuncFunction --docker-network localstack.internal --log-file check.log --profile=localstack`**
 
+## API Gateway
+sam local start-api --docker-network app_network  
+
+## コンテナ側PHP
+curl http://host.docker.internal:3000/excel-report  
+
+## deploy  
 問題なければ、  
 **`sam deploy --guided`**
 *AWSのクレデンシャルを設定、IAMロールの事前設定
