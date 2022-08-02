@@ -17,10 +17,13 @@ sam init --runtime python3.9 --name lambda
 ├── READEME.md  
 ├── docker-compose.yml  
 ├── excel-auto  
+|   ├── events  
+|   |   └──event.json  
 │   ├── func  
 │   │   ├── __init__.py  
 │   │   ├── app.py  
 │   │   └── requirements.txt  
+│   ├──tests(割愛)  
 │   └── template.yaml  
 └── localstack  
     ├── cache  
