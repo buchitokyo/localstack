@@ -94,16 +94,22 @@ docker-compose up -d
 http://localhost:4566/health  
 
 ## S3
-aws s3 mb s3://{bucket_name} --endpoint-url=http://localhost:4566 --profile=localstack  
+aws s3 mb s3://develop --endpoint-url=http://localhost:4566 --profile=localstack  
+*参考*
 aws s3 --endpoint-url=http://localhost:4566 cp ~/Downloads/{excel_name}.xlsx  s3://develop/excel/ --profile=localstack  
+aws s3 ls --endpoint-url=http://localhost:4566 --profile localstack  
 aws s3 ls --endpoint-url=http://localhost:4566 s3://develop/excel/  --profile=localstack  
+aws s3 ls s3://develop --endpoint-url=http://localhost:4566 --profile localstack
 
 ## SAM build, invoke function
 template.yamlがある場所で  
 **`sam build --use-container`**
 
 .aws-sam/build/template.yamlがある場所で  
-**`sam local invoke FuncFunction --docker-network localstack.internal --log-file check.log --profile=localstack`**
+**`sam local invoke FuncFunction --docker-network app_network --log-file check.log --profile=localstack`**
+
+## S3 trigger event
+sam local generate-event s3 put --bucket develop --key test_key > events/event.json
 
 ## API Gateway
 sam local start-api --docker-network app_network  

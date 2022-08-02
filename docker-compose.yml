@@ -20,6 +20,25 @@ services:
       default:
       app_network:
 
+  # # awscli
+  # awscli:
+  #   container_name: awscli
+  #   image: amazon/aws-cli:latest
+  #   environment:
+  #     - AWS_DEFAULT_REGION=ap-northeast-1
+  #     - AWS_DEFAULT_OUTPUT=json
+  #     - AWS_ACCESS_KEY_ID=dummy
+  #     - AWS_SECRET_ACCESS_KEY=dummy
+  #   depends_on:
+  #     - localstack
+  #   entrypoint: aws --endpoint-url=http://localstack:4566 s3 mb s3://develop
+  #   extra_hosts:
+  #     - "localstack:172.16.238.1"
+  #     - "develop.localstack:172.16.238.1"
+  #   networks:
+  #     default:
+  #     app_network:
+
 volumes:
   localstack:
 
