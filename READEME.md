@@ -13,24 +13,26 @@ Default output format [None]: json
 ## Make Python project
 sam init --runtime python3.9 --name lambda  
 
+```
 ├── READEME.md  
 ├── docker-compose.yml  
 ├── excel-auto  
-│ ├── func  
-│ │ ├── __init__.py  
-│ │ ├── app.py  
-│ │ └── requirements.txt  
-│ └── template.yaml  
+│   ├── func  
+│   │   ├── __init__.py  
+│   │   ├── app.py  
+│   │   └── requirements.txt  
+│   └── template.yaml  
 └── localstack  
-  ├── cache  
-  │ ├── machine.json  
-  │ ├── server.test.pem  
-  │ ├── server.test.pem.crt  
-  │ └── server.test.pem.key  
-  ├── data  
-  │ └── startup_info.json  
-  ├── logs  
-  └── var_libs  
+    ├── cache  
+    │   ├── machine.json  
+    │   ├── server.test.pem  
+    │   ├── server.test.pem.crt  
+    │   └── server.test.pem.key  
+    ├── data  
+    │   └── startup_info.json  
+    ├── logs  
+    └── var_libs  
+```
 
 ## template.yaml
 remove API Gateway sections  
@@ -94,11 +96,11 @@ remove event dir, readme.md, init.py .gitignore (if you have a repo, just leave 
 http://localhost:4566/health  
 
 ## S3
-**`aws s3 mb s3://develop --endpoint-url=http://localhost:4566 --profile=localstack`**
-**`aws s3 --endpoint-url=http://localhost:4566 cp ~/Downloads/{excel_name}.xlsx  s3://develop/excel/ --profile=localstack`**
-**`aws s3 ls --endpoint-url=http://localhost:4566 --profile localstack`**
-**`aws s3 ls --endpoint-url=http://localhost:4566 s3://develop/excel/  --profile=localstack`**
-**`aws s3 ls s3://develop --endpoint-url=http://localhost:4566 --profile localstack`**
+**`aws s3 mb s3://develop --endpoint-url=http://localhost:4566 --profile=localstack`**  
+**`aws s3 --endpoint-url=http://localhost:4566 cp ~/Downloads/{excel_name}.xlsx  s3://develop/excel/ --profile=localstack`**  
+**`aws s3 ls --endpoint-url=http://localhost:4566 --profile localstack`**  
+**`aws s3 ls --endpoint-url=http://localhost:4566 s3://develop/excel/  --profile=localstack`**  
+**`aws s3 ls s3://develop --endpoint-url=http://localhost:4566 --profile localstack`**  
 
 ## SAM build, invoke function
 template.yamlがある場所で  
