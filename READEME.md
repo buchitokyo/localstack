@@ -105,12 +105,14 @@ http://localhost:4566/health
 **`aws s3 ls --endpoint-url=http://localhost:4566 s3://develop/excel/  --profile=localstack`**  
 **`aws s3 ls s3://develop --endpoint-url=http://localhost:4566 --profile localstack`**  
 
+aws --endpoint-url=http://localhost:4566 s3 cp s3://develop/import/1/GLOBIS学び放題フレッシャーズ集計エクセル.xlsx download.xlsx
+
 ## SAM build, invoke function
 template.yamlがある場所で  
 **`sam build --use-container`**
 
 .aws-sam/build/template.yamlがある場所で  
-**`sam local invoke FuncFunction --docker-network app_network --log-file check.log --profile=localstack`**
+**`sam local invoke FuncFunction --docker-network app_network --log-file result.log --profile=localstack`**
 
 ## S3 trigger event
 **`sam local generate-event s3 put --bucket develop --key test_key > events/event.json`**
